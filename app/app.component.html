@@ -1,0 +1,28 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<form (ngSubmit)="create(title); todoForm.reset()" #todoForm="ngForm">
+  <div class="input-field">
+
+    <input name="title" [(ngModel)]="title" id="search" type="search" required placeholder="your new todo">
+    <button [disabled]="todoForm.form.invalid">add</button>
+
+  </div>
+</form>
+
+
+
+<div *ngFor="let todo of todos" @appear>
+
+  <!--<button (click)="todo.completed = 1">1</button>-->
+  <!--<button (click)="todo.completed = 0">0</button>-->
+
+  <div style="display: flex;">
+    <input (click)="toggle(todo, $event)" type="checkbox" [checked]="todo.completed">
+    <div>
+      <p>{{ todo.title }}</p>
+    </div>
+    <button (click)="delete(todo)">del</button>
+  </div>
+
+</div>
+
+<router-outlet></router-outlet>
