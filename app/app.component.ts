@@ -94,17 +94,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.todosService.getTodos().subscribe( responce => {
-    //     console.log( responce );
-    //     this.todos = responce;
-    //
-    // });
-
-    this.todosService.getTodos().subscribe( data => {
-
-      this.todos = data;
-      console.log(deepEquals(data, this.todos));
-    } );
+    this.todosService.getTodos().subscribe( data => this.todos = data );
 
     // interval(3000)
     //   .pipe(
@@ -112,11 +102,7 @@ export class AppComponent implements OnInit {
     //     switchMap(() => this.todosService.getTodos() )
     //   )
     //   .subscribe(res => {
-    //     this.todosService.getTodos().subscribe( responce => {
-    //       console.log( responce );
-    //       this.todos = responce;
-    //
-    //     });
+    //       console.log( deepEquals(res, this.todos) );
     //   });
 
   }

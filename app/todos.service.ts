@@ -24,15 +24,8 @@ export class TodosService {
   }
 
   toggleTodo( todo ): Observable<any[]> {
-    // @ts-ignore
-    todo.completed = !todo.completed - 0;
-
-    // if ( todo.completed ) {
-    //   todo.completed = 1;
-    // } else {
-    //   todo.completed = 0;
-    // }
-    return this.http.put( `${this.API}/${todo.id}?completed=${todo.completed}` );
+    todo.completed = !todo.completed;
+    return this.http.put( `${this.API}/${todo.id}?completed=${+todo.completed}` );
   }
 
   deleteTodo( todo: any ) {
