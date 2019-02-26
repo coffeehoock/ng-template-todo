@@ -10,7 +10,7 @@
 
 
 
-<div *ngFor="let todo of todos" @appear>
+<div *ngFor="let todo of todos.reverse()" @appear>
 
   <div style="display: flex;">
     <input (click)="toggle(todo, $event)" type="checkbox" [checked]="todo.completed">

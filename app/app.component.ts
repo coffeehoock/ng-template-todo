@@ -1,8 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ɵdevModeEqual} from '@angular/core';
 import {TodosService} from './todos.service';
 import {interval, Observable, of} from 'rxjs';
 import {startWith, switchMap} from 'rxjs/operators';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {equalSegments} from '@angular/router/src/url_tree';
 
 export function deepEquals(x, y) {
   if (x === y) {
@@ -96,14 +97,51 @@ export class AppComponent implements OnInit {
 
     this.todosService.getTodos().subscribe( data => this.todos = data );
 
-    // interval(3000)
-    //   .pipe(
-    //     startWith(0),
-    //     switchMap(() => this.todosService.getTodos() )
-    //   )
-    //   .subscribe(res => {
-    //       console.log( deepEquals(res, this.todos) );
-    //   });
+    interval(3000)
+      .pipe(
+        startWith(0),
+        switchMap(() => this.todosService.getTodos() )
+      )
+      .subscribe(res => {
+
+        /**
+         * @delete
+         * @create
+         * @edit
+         * */
+        Object.keys( res ).map(key => {
+          // console.log( this.todos.indexOf( this.todos[key] ) ,key );
+          if ( !this.todos[key] ) {
+            this.todos.push(res[key]);
+            // @ts-ignore
+          } else if ( +this.todos.length !== +res.length || this.todos.length === 1 ) {
+              console.log( this.todos[key].id !== res[key].id );
+            if ( +this.todos[key].id !== +res[key].id ) {
+              console.log( 2 );
+              console.log(this.todos[key])
+              const index: number = this.todos.indexOf( this.todos[key] );
+              console.log( 3 );
+              if ( index > -1 ) {
+                console.log( 4 );
+                this.todos.splice(index, 1);
+              }
+
+              // this.todos[key] = null
+
+            }
+          } /*else {
+
+            if ( !deepEquals( res,  this.todos) )  {
+              for ( let x in res[key] ) {
+                if ( this.todos[key][x] !== res[key][x]  ) {
+                  this.todos[key][x] = res[key][x];
+                }
+              }
+            }
+          }*/
+
+        });
+      });
 
   }
 
@@ -129,6 +167,5 @@ export class AppComponent implements OnInit {
 
     });
   }
-
 
 }
