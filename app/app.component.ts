@@ -136,17 +136,20 @@ export class AppComponent implements OnInit {
               }
 
             }
-          } /*else {
+          }
+        });
 
-            if ( !deepEquals( res,  this.todos) )  {
-              for ( let x in res[key] ) {
+        Object.keys( this.todos ).map(key => {
+
+          if ( !deepEquals( res,  this.todos) )  {
+              for ( const x in res[key] ) {
                 if ( this.todos[key][x] !== res[key][x]  ) {
                   this.todos[key][x] = res[key][x];
                 }
               }
-            }
-          }*/
+          }
         });
+
 
       });
   }
