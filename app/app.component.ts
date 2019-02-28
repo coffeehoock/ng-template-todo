@@ -110,23 +110,30 @@ export class AppComponent implements OnInit {
          * @edit
          * */
         Object.keys( res ).map(key => {
-          // console.log( this.todos.indexOf( this.todos[key] ) ,key );
-          if ( !this.todos[key] ) {
-            this.todos.push(res[key]);
-            // @ts-ignore
-          } else if ( +this.todos.length !== +res.length || this.todos.length === 1 ) {
-              console.log( this.todos[key].id !== res[key].id );
-            if ( +this.todos[key].id !== +res[key].id ) {
-              console.log( 2 );
-              console.log(this.todos[key])
+          if ( !this.todos[key] ) { this.todos.push(res[key]); }
+        });
+
+        Object.keys( this.todos ).map(key => {
+          // @ts-ignore
+          if ( this.todos.length !== res.length ) {
+            // console.log( this.todos.length !== res.length );
+            if ( !res[key] ) {
               const index: number = this.todos.indexOf( this.todos[key] );
-              console.log( 3 );
+
               if ( index > -1 ) {
-                console.log( 4 );
+
                 this.todos.splice(index, 1);
               }
+            } else {
+              if ( this.todos[key].id !== res[key].id || res[key] === undefined ) {
 
-              // this.todos[key] = null
+                const index: number = this.todos.indexOf( this.todos[key] );
+
+                if ( index > -1 ) {
+
+                  this.todos.splice(index, 1);
+                }
+              }
 
             }
           } /*else {
@@ -139,10 +146,9 @@ export class AppComponent implements OnInit {
               }
             }
           }*/
-
         });
-      });
 
+      });
   }
 
   create( title: string ) {
